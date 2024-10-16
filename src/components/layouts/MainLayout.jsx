@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Link, Navigate, Outlet} from 'react-router-dom'
 import {Home, AccountCircle, Menu} from '@mui/icons-material'
-import { AppBar, Box, Button, Drawer, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Button, Drawer, List, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material'
 
 const drawerWidth = 240
 
@@ -40,7 +40,7 @@ const DrawerForWideScreen = () =>(
                                     <ListItemIcon>
                                         {page?.icon ? page.icon : null}
                                     </ListItemIcon>
-                                    <ListItemText sx={{pl: 6}} primary={page.label} />
+                                    <ListItemText primary={page.label} />
                                 </ListItemButton>
                             </Link>
                         </ListItem>

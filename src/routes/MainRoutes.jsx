@@ -9,10 +9,10 @@ const MainRoutes = [
                 path: "",
                 element: <Dashboard/>
             },
-            {
-                path: "/profiles",
-                element: <Profiles/>
-            }
+            // {
+            //     path: "/profiles",
+            //     element: <Profiles/>
+            // }
         ]
     }
 ]
