@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Link, Navigate, Outlet} from 'react-router-dom'
-import {Home, AccountCircle, Menu} from '@mui/icons-material'
+import {Home, AccountCircle, Menu, Inbox} from '@mui/icons-material'
 import { AppBar, Box, Button, Drawer, List, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material'
 
 const drawerWidth = 240
@@ -25,7 +25,8 @@ const DrawerForWideScreen = () =>(
             width: drawerWidth,
             flexShrink: 0,
             [`& .MuiDrawer-paper`]: {width: drawerWidth, boxSizing: 'border-box'},
-            display: {xs: 'none',sm:'none',md:'block'}
+            display: {xs: 'none',sm:'none',md:'block'},
+            position: 'inherit'
         }}
     >
         <Toolbar/>
@@ -51,6 +52,40 @@ const DrawerForWideScreen = () =>(
     </Drawer>
 )
 
+const  DrawerForSmallScreen = ({open, onClose}) => (
+    <Drawer
+        anchor="left"
+        open={open}
+        onClose={onClose}
+        sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box'},
+            display: {xs: 'block', sm: 'block', md: 'none'}
+        }}
+    >
+        <Toolbar />
+        <Box sx={{ overflow: 'auto'}} >
+            <List>
+                {pages.map((page, index) => (
+                    <ListItem  key={index} disablePadding>
+                       
+                        <Link style={{ color: 'inherit', textDecoration: 'inherit', width: '100%' }} to={page?.to ? page.to : '/'}>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    {page.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={page.label} />
+                            </ListItemButton>
+                        </Link>
+                    </ListItem>
+                ))}
+            </List>
+        </Box>
+    </Drawer>
+)
+
+
 function MainLayout(){
     const [openDrawer, setOpenDrawer] = useState(false)
 
@@ -58,31 +93,37 @@ function MainLayout(){
 
     return (
         <>
-            <Box sx={{flexGrow: 1}}>
-                <AppBar position='fixed' sx={{ zIndex: theme => theme.zIndex.drawer + 1}}>
-                    <Toolbar>
-                        <IconButton 
-                        size='large'
-                        edge='start'
-                        color='inherit'
-                        aria-label='menu'
-                        sx={{mr:2,display: {sm: 'block', md: 'none'}}}
-                        onClick={toggleDrawer}
-                        >
-                            <Menu/>
-                        </IconButton>
-                        {/* our web app icon */}
-                        <Typography variant='h6' component='div' sx={{flexGrow: 1}}>
-                            Social Media Admin Panel
-                        </Typography>
-                        
-                    </Toolbar>
-                </AppBar>
-                <DrawerForWideScreen />
-            </Box>
-            <Box sx={{mt: 8, pl:{md: `${drawerWidth}px`, sm: 0}}}>
-                <Box>
-                    <Outlet/>
+            {/* parent */}
+            <Box sx={{background: 'red', display: 'flex', flexDirection: 'column', height: '100vh'}}>
+                <Box sx={{flex: 1, display: 'flex'}}>
+                    {/* nav */}
+                    <Box>
+                        <AppBar sx={{ zIndex: theme => theme.zIndex.drawer + 1}}>
+                            <Toolbar>
+                                <IconButton 
+                                size='large'
+                                edge='start'
+                                color='inherit'
+                                aria-label='menu'
+                                sx={{mr:2,display: {sm: 'block', md: 'none'}}}
+                                onClick={toggleDrawer}
+                                >
+                                    <Menu/>
+                                </IconButton>
+                                <Typography variant='h6' component='div' >
+                                    Social Media Admin Panel
+                                </Typography>
+                                
+                            </Toolbar>
+                        </AppBar>
+                        <DrawerForWideScreen />
+                        <DrawerForSmallScreen open={openDrawer} onClose={toggleDrawer}/>
+                    </Box>
+                    {/* content */}
+                    <Box pt={8} sx={{height: '100%', width: '100%', display: 'flex', flexDirection: 'row'}}>
+                         <Outlet/>
+                    </Box>
+                   
                 </Box>
                 
             </Box>

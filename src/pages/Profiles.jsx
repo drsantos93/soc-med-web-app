@@ -18,8 +18,13 @@ const columns =[
     {
         field: 'bio',
         headerName: 'Bio',
-        width: 150
+        flex: 1
     },
+    {
+        field: 'action',
+        headerName: 'Actions',
+        flex: 1
+    }
 ]
 
 function Profiles(){
@@ -31,20 +36,29 @@ function Profiles(){
         })
     },[])
     return (
-        <Box sx={{backgroundColor: '#fff'}}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                initialState={{
-                    pagination:{
-                        paginationModel:{
-                            pageSize: 10
+        <Box sx={{backgroundColor: '#fff', flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 2}} >
+            <Box m={2}>
+                <Typography variant='h2' textAlign='center'>
+                    Profile management
+                </Typography>
+            </Box>
+            <Box sx={{flex: 1}} p={8}>
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                        pagination:{
+                            paginationModel:{
+                                pageSize: 10
+                            }
                         }
-                    }
-                }}
-                pageSizeOptions={[5, 10, 20, 30, 50, 100]}
-                disableRowSelectionOnClick
-            />
+                    }}
+                    pageSizeOptions={[5, 10, 20, 30, 50, 100]}
+                    disableRowSelectionOnClick
+                    disableColumnResize
+                />
+            </Box>
+            
         </Box>
     )
 }
