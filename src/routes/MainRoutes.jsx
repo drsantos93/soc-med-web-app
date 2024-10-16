@@ -1,5 +1,6 @@
 import MainLayout from "../components/layouts/MainLayout"
 import Dashboard from "../pages/Dashboard"
+import Profiles from "../pages/Profiles"
 const MainRoutes = [
     {
         path: '/',
@@ -9,10 +10,10 @@ const MainRoutes = [
                 path: "",
                 element: <Dashboard/>
             },
-            // {
-            //     path: "/profiles",
-            //     element: <Profiles/>
-            // }
+            {
+                path: "/profile",
+                element: <Profiles/>
+            }
         ]
     }
 ]
