@@ -11,6 +11,9 @@ const themeOptions = createTheme({
         },
         error:{
             main: "#e32b2b"
+        },
+        success:{
+            main: "#21d94c"
         }
     },
     typography:{
