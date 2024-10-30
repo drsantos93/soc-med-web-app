@@ -72,14 +72,14 @@ function MainLayout(){
     return (
         <>
             {/* parent */}
-            <Box sx={{bgcolor: 'lightgray', display: 'flex', flexDirection: 'column', height: '100vh'}}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh'}}>
                 <Box sx={{flex: 1, display: 'flex'}}>
                     {/* nav */}
                     <Box>
                         <DrawerForWideScreen />
                     </Box>
                     {/* content */}
-                    <Box pt={8} sx={{height: '100%', width: '100%', display: 'flex', flexDirection: 'row'}}>
+                    <Box p={2} sx={{bgcolor:'lightgray',height: '100%', width: '100%', display: 'flex', flexDirection: 'row'}}>
                          <Outlet/>
                     </Box>
                    

@@ -13,7 +13,7 @@ export const retrieveProfiles = async () => {
 }
 
 export const DMLProfiles = async (type, inputs) =>{
-    const res = await fetch(`${URL}/profiles`,{
+    const res = await fetch(`${URL}/profiles/`,{
         method: type,
         headers:{
             Accept: 'application/json',
