@@ -8,12 +8,12 @@ const drawerWidth = 240
 const pages =[
     {
         label: 'Dashboard',
-        to: '/',
+        to: '/admin/',
         icon: <Home/>
     },
     {
         label: 'Profiles',
-        to: '/profile',
+        to: '/admin/profile',
         icon: <AccountCircle/>
     }
 ]
