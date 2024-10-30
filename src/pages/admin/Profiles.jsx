@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import {useState, useEffect} from 'react'
 import { DataGrid } from '@mui/x-data-grid'
-import { retrieveProfiles } from '../api/profiles'
+import { retrieveProfiles } from '../../api/profiles'
 
 const columns =[
     {field: 'id', headerName: 'ID', width: 90},

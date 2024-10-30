@@ -1,10 +1,10 @@
-import MainLayout from "../components/layouts/MainLayout"
-import Dashboard from "../pages/Dashboard"
-import Profiles from "../pages/Profiles"
+import AdminLayout from "../components/layouts/AdminLayout"
+import Dashboard from "../pages/admin/Dashboard"
+import Profiles from "../pages/admin/Profiles"
 const AdminRoutes = [
     {
         path: '/admin/',
-        element: <MainLayout/>,
+        element: <AdminLayout/>,
         children:[
             {
                 path: "",
