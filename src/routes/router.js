@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom"
-import MainRoutes from "./MainRoutes"
+import AdminRoutes from "./AdminRoutes"
 
-const router = createBrowserRouter([...MainRoutes])
+const router = createBrowserRouter([...AdminRoutes])
 
 export default router

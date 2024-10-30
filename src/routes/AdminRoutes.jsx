@@ -1,9 +1,9 @@
 import MainLayout from "../components/layouts/MainLayout"
 import Dashboard from "../pages/Dashboard"
 import Profiles from "../pages/Profiles"
-const MainRoutes = [
+const AdminRoutes = [
     {
-        path: '/',
+        path: '/admin/',
         element: <MainLayout/>,
         children:[
             {
@@ -11,11 +11,11 @@ const MainRoutes = [
                 element: <Dashboard/>
             },
             {
-                path: "/profile",
+                path: "/admin/profile",
                 element: <Profiles/>
             }
         ]
     }
 ]
 
-export default MainRoutes
+export default AdminRoutes
