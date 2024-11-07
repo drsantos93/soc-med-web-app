@@ -1,7 +1,8 @@
 import { URL } from "./connection"
 
-export const getPosts = async () => {
-    const res = await fetch(`${URL}/posts`,{
+export const getPosts = async (page) => {
+    const getPage = page ? `${URL}/posts/?page=${page}` : `${URL}/posts`
+    const res = await fetch(getPage,{
         method: 'GET',
         headers: {
             Accept: 'application/json',

@@ -94,7 +94,7 @@ function AdminLayout(){
     return (
         <>
             {/* parent */}
-            <Box sx={{background: 'red', display: 'flex', flexDirection: 'column', height: '100vh'}}>
+            <Box sx={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
                 <Box sx={{flex: 1, display: 'flex'}}>
                     {/* nav */}
                     <Box>

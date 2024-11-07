@@ -12,7 +12,7 @@ export const retrieveProfiles = async () => {
     return await res.json()
 }
 
-export const DMLProfiles = async (type, inputs) =>{
+export const DMLProfiles = async (inputs,type) =>{
     const res = await fetch(`${URL}/profiles/`,{
         method: type,
         headers:{
