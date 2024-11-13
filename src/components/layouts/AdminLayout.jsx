@@ -1,20 +1,26 @@
 import React, {useState} from 'react'
 import {Link, Navigate, Outlet} from 'react-router-dom'
-import {Home, AccountCircle, Menu, Inbox} from '@mui/icons-material'
+import {Home, AccountCircle, Menu, Inbox, Dashboard} from '@mui/icons-material'
 import { AppBar, Box, Button, Drawer, List, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material'
+import AdminAuth from '../hoc/AdminAuth'
 
 const drawerWidth = 240
 
 const pages =[
     {
         label: 'Dashboard',
-        to: '/admin/',
-        icon: <Home/>
+        to: '../admin/',
+        icon: <Dashboard/>
     },
     {
         label: 'Profiles',
-        to: '/admin/profile',
+        to: '../admin/profile',
         icon: <AccountCircle/>
+    },
+    {
+        label: 'Back to Home',
+        to:"../",
+        icon: <Home/>
     }
 ]
 
@@ -131,4 +137,4 @@ function AdminLayout(){
     )
 }
 
-export default AdminLayout
+export default AdminAuth(AdminLayout)

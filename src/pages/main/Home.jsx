@@ -3,12 +3,16 @@ import { useEffect, useLayoutEffect, useState } from "react"
 import { AddComment, getPosts } from "../../api/posts"
 import $ from 'jquery'
 import { toast } from "react-toastify"
+import { useSelector } from "react-redux"
+import CustomModal from "../../components/Modal"
 
 export default function Home(){
     const [posts, setPosts] = useState([])
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState()
     const [currentItem, setCurrentItem] = useState({})
+    const [open, setOpen] = useState(false)
+    const user = useSelector(state=>state.auth.user)
 
     // for re-rendering
     // useEffect(()=>{
@@ -49,11 +53,19 @@ export default function Home(){
     },[page])
 
 
+    const openModal = () =>{
+        setOpen(true)
+    }
+
+    const closeModal = () =>{
+        setOpen(false)
+    }
+
     const handleCommentSend = () =>{
-        console.log(page)
+       
          //not recorded, but here it is the comment function
         if(currentItem.id !== undefined){
-            AddComment({comment:currentItem.comment, post:currentItem.id})
+            AddComment({comment:currentItem.comment, post:currentItem.id, created_by: user?.user_id})
             .then(res=>{
                 toast.success(`Commented to ${currentItem.created_by?.username} post`)
             }).finally(()=>{
@@ -106,7 +118,21 @@ export default function Home(){
         <Box sx={{flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 2}}>
             <Box sx={{flex: 1, maxHeight: '50px'}}>
                 {/* buttons here */}
-                <Button sx={{float: 'right'}} variant="contained" color="success">Add Post</Button>
+                <CustomModal
+                    buttonText="Add Post"
+                    open={open}
+                    handleOpen={() => openModal("add",null)} 
+                    handleClose={() => closeModal()}
+                    btnSx={{ml: 2, color: 'white', fontWeight: 'bold', float: 'right'}}
+                >
+                    <Typography 
+                        variant="h3" 
+                        bgcolor="#3079e6"
+                        sx={{flex: 1, textAlign:'center',color: 'white',p: 2, width: '100%'}}
+                    >
+                        Add a Post
+                    </Typography>
+                </CustomModal>
             </Box>
             <Box id="Posts" sx={{display: 'flex',alignItems: 'center',flexDirection:'column', gap: 2,maxHeight: '100%', width: '100%'}}>
                 {
@@ -116,26 +142,35 @@ export default function Home(){
                             <CardHeader 
                                 avatar={
                                     <Avatar sx={{bgcolor: 'red'}}>
-                                        {item.created_by?.username.substring(0,1).toUpperCase()}
+                                        {item.created_by?.first_name.substring(0,1).toUpperCase()}{item.created_by?.last_name.substring(0,1).toUpperCase()}
                                     </Avatar>
                                 }
-                                title={`${item.created_by?.username} posted`}
+                                title={`${item.created_by?.first_name} ${item.created_by?.last_name} posted`}
                                 subheader={new Date(item.created_at).toLocaleString('en-US', {month: 'long', day: '2-digit', year: 'numeric'})}
                             />
-                            <CardMedia
-                                component="img"
-                                height="300px"
-                                width="100%"
-                                sx={{objectFit: 'contain'}}
-                                src={item.media_link ?? 'https://img.freepik.com/premium-photo/empty-yellow-note-with-black-pin-white-yellow-background-blank-yellow-sticky-note_486333-1870.jpg'}
-                                alt="Picture of post"
-                            />
                             <CardContent>
-                                    <Typography variant="body1">
-                                        {item.description}
-                                    </Typography>
+                                <Typography variant="body1">
+                                    {item.description}
+                                </Typography>
                             </CardContent>
-                            <CardContent sx={{borderTop: '1px solid gray',minHeight:0,maxHeight: '400px', overflow: 'auto'}}>
+                            {
+                                item.media_link ? 
+                                <CardMedia
+                                    component="img"
+                                    height="300px"
+                                    width="100%"
+                                    sx={{objectFit: 'contain'}}
+                                    src={item.media_link ?? 'https://img.freepik.com/premium-photo/empty-yellow-note-with-black-pin-white-yellow-background-blank-yellow-sticky-note_486333-1870.jpg'}
+                                    alt="Picture of post"
+                                /> 
+                                : null
+                            }
+                            
+                            {/* card content for comment section */}
+                            <CardContent sx={[
+                                {borderTop: '1px solid gray',minHeight:0, overflow: 'auto'},
+                                item?.media_link ? {maxHeight: '400px'} : {maxHeight: '700px'}
+                            ]}>
                                 <List sx={{flex: 1, width: '100%',minHeight: 0}} >
                                 {
                                     item.post_comment?.toReversed().map((comment, cIndex)=>(
@@ -144,10 +179,10 @@ export default function Home(){
                                                 <CardHeader 
                                                     avatar={
                                                         <Avatar sx={{bgcolor: 'red'}}>
-                                                            {comment.created_by?.username.substring(0,1).toUpperCase()}
+                                                            {comment.created_by?.first_name.substring(0,1).toUpperCase()}{comment.created_by?.last_name.substring(0,1).toUpperCase()}
                                                         </Avatar>
                                                     }
-                                                    title={`${comment.created_by?.username} commented`}
+                                                    title={`${comment.created_by?.first_name} ${comment.created_by?.last_name} commented`}
                                                     subheader={new Date(comment.created_at).toLocaleString('en-US', {month: 'long', day: '2-digit', year: 'numeric'})}
                                                 />
                                                 
