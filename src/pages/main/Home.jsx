@@ -1,10 +1,11 @@
 import { Typography, Box, Card, Button, CardHeader, Avatar, CardMedia, CardContent, ListItem, List, CardActions, TextField } from "@mui/material"
-import { useEffect, useLayoutEffect, useState } from "react"
-import { AddComment, getPosts } from "../../api/posts"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { AddComment, DMLPosts, getPosts } from "../../api/posts"
 import $ from 'jquery'
 import { toast } from "react-toastify"
 import { useSelector } from "react-redux"
 import CustomModal from "../../components/Modal"
+import CustomInput from "../../components/Input"
 
 export default function Home(){
     const [posts, setPosts] = useState([])
@@ -12,6 +13,7 @@ export default function Home(){
     const [totalPages, setTotalPages] = useState()
     const [currentItem, setCurrentItem] = useState({})
     const [open, setOpen] = useState(false)
+    const postRef = useRef([])
     const user = useSelector(state=>state.auth.user)
 
     // for re-rendering
@@ -108,10 +110,29 @@ export default function Home(){
     }
 
     const loadMore = () =>{
-        
+        // not optimized because I forgor how to do it
         if(page <= totalPages){
             setPage(page + 1)
         }
+    }
+
+    const AddPost = () =>{
+        const postDesc = postRef.current[0].value
+        const media = postRef.current[1].value
+        
+        DMLPosts("POST",{created_by: user.user_id, description: postDesc, media_link: media}).then(res=>{
+            console.log(res)
+            if(res.ok){
+                getPosts(page).then(res=>{
+                    setPosts(res.data)
+                    setTotalPages(res.total_pages)
+                })
+                closeModal()
+                toast.success('Post successfully created!',{position: 'top-center'})
+            }else{
+                toast.error('Something went wrong!',{position: 'top-center'})
+            }
+        })
     }
 
     return(
@@ -132,6 +153,25 @@ export default function Home(){
                     >
                         Add a Post
                     </Typography>
+                    <CustomInput
+                            required
+                            sx={{width: '90%'}}
+                            multiline
+                            rows={5}
+                            variant="outlined"
+                            label="Post Body"
+                            inputRef={el=>postRef.current[0] = el}
+                        />
+                        <CustomInput
+                            required
+                            sx={{width: '90%'}}
+                            variant="outlined"
+                            label="Media Link"
+                            inputRef={el=>postRef.current[1] = el}
+                        />
+               
+
+                   <Button onClick={AddPost} variant="contained" color="success" fullWidth>Post Now!</Button>
                 </CustomModal>
             </Box>
             <Box id="Posts" sx={{display: 'flex',alignItems: 'center',flexDirection:'column', gap: 2,maxHeight: '100%', width: '100%'}}>
@@ -169,7 +209,7 @@ export default function Home(){
                             {/* card content for comment section */}
                             <CardContent sx={[
                                 {borderTop: '1px solid gray',minHeight:0, overflow: 'auto'},
-                                item?.media_link ? {maxHeight: '400px'} : {maxHeight: '700px'}
+                                item?.media_link ? {minHeight: '400px',maxHeight: '400px'} : {minHeight: '700px',maxHeight: '700px'}
                             ]}>
                                 <List sx={{flex: 1, width: '100%',minHeight: 0}} >
                                 {

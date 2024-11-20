@@ -20,7 +20,6 @@ export default function AdminAuth(WrappedComponent){
                 
             }else{
                 //logged in user
-                console.log("hello")
                 verifyToken(user).then(res=>{
                     if(res){
                         const userman = jwtDecode(user)

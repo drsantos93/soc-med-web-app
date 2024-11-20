@@ -53,13 +53,7 @@ export default function Login(){
 
     return (
         <Box sx={{flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center',alignItems: 'center', flexWrap: 'wrap', gap: 2}}>
-            {/* we need:
-                1. Loading component [done]
-                2. Custom component: TextField [done]
-                3. Link to registration [done]
-                4. Card [done]
-                5. (too many) functionality of login
-            */}
+          
             <Loading open={loading} />
             <Box component='form' onSubmit={handleLogin} sx={{bgcolor: '#fbfcf8', width: '500px', p: 4, borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, flexWrap: 'wrap'}}>
                 <img src={ReactImg} width='100px' height='100px' />

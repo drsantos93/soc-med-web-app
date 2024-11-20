@@ -23,9 +23,10 @@ export default function CustomModal({open, handleOpen, buttonText, handleClose, 
                         marginRight: 'auto',
                         marginLeft: 'auto',
                         marginTop: 10,
-                        gap: 5,
+                        gap: 3,
                         width: '50%',
-                        bgcolor: 'background.paper'
+                        bgcolor: 'background.paper',
+                        flexWrap: 'wrap'
                     }}
                 >
                     {children}
